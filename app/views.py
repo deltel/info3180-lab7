@@ -45,12 +45,12 @@ def upload():
             "description": form.description.data
         }
 
-        return json.dump(data)
+        return json.dumps(data)
     data = {
         "errors": form_errors(form)
     }
 
-    return json.dump(data)
+    return json.dumps(data)
 
 
 # Here we define a function to collect form errors from Flask-WTF
