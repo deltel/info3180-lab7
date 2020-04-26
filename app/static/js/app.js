@@ -45,24 +45,36 @@ const Home = Vue.component('home', {
 
 const Upload = Vue.component('upload', {
     template: `
-        <div class="upload-form">
-            <h2>Upload Form</h2>
-            <form method="POST" enctype="multipart/form-data" @submit.prevent="uploadPhoto" id="uploadForm">
-                <div class="form-group">
-                    <label for="photo">Photo</label>
-                    <input type="file" name="photo" id="photo"/>
-                </div>
-
+        <div id="upload-form">
+            <h1>Upload Form</h1>
+            <h4 v-if="message" class="success">{{ message }}</h4>
+            <ul v-if="errors.length > 0" class="error_list">
+                <li v-for="error in errors" class="error_items">
+                    <div>{{ error }}</div>
+                </li>
+            </ul>
+            <form method="POST" enctype="multipart/form-data"  action="" @submit.prevent="uploadPhoto" id="uploadForm">
                 <div class="form-group">
                     <label for="desc">Description</label>
                     <textarea id="desc" name="description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="photo">Photo Upload</label>
+                    <input type="file" name="photo" id="photo"/>
                 </div>
                 <button type="Submit" class="btn btn-submit">Submit</button>
             </form>
         </div>
     `,
+    data: function(){
+        return {
+            message: '',
+            errors: []
+        }
+    },
     methods: {
         uploadPhoto: function(){
+            let self = this;
             let uploadForm = document.getElementById('uploadForm');
             let form_data = new FormData(uploadForm);
 
@@ -79,7 +91,14 @@ const Upload = Vue.component('upload', {
             })
             .then(function(jsonResponse){
                 //display a success message
-                console.log(jsonResponse);
+                if (jsonResponse['errors']) {
+                    self.errors = jsonResponse['errors'];
+                    setTimeout(function(){ self.errors = [] }, 5000);
+                } else {
+                    self.message = jsonResponse['message'];
+                    document.getElementById('uploadForm').reset();
+                    setTimeout(function(){ self.message = ''; }, 5000);
+                }
             })
             .catch(function(error){
                 console.log(error);

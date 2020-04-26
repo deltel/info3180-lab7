@@ -1,3 +1,50 @@
 body {
     padding-top: 5rem;
 }
+
+h1 {
+    margin-bottom: 2em;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bolder;
+}
+
+.form-group textarea, .btn-submit, .success, .error_list {
+    border-radius: 5px;
+}
+
+.form-group textarea{
+    width: 100%;
+    height: 10em;
+}
+
+.form-group textarea {
+    padding: 1em 1em;    
+}
+
+.error_list, .success {
+    font-weight: bold;
+    padding-top: 2em;
+    padding-bottom: 2em;
+}
+
+.error_list {
+    background-color: #e09292;
+}
+
+.success {
+    padding-left: 1em;
+    padding-right: 1em;
+    background-color: #a7e092;
+}
+
+.btn-submit {
+    background-color: #039dfc;
+    color: #fff;
+}
+
+#upload-form {
+    margin-bottom: 10em;
+}
